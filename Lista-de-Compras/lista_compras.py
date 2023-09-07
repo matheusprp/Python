@@ -1,21 +1,25 @@
+import os
+
 lista_compras = []
 
 
 def inserir_item(item):
     lista_compras.append(item)
+    os.system('clear')
     print(f"\tItem adicionado: {item}")
-
-
-def apagar_item(item):
-    lista_compras.pop(item)
-    print(f"\tO item {item} foi apagado da lista!")
 
 
 def listar_itens():
     if lista_compras == []:
         print("\tA lista está vazia!")
+    print("---------LISTA ATUAL---------")
     for indice, item in enumerate(lista_compras):
-        print(indice, item.upper())
+        print(f"\t{indice}: {item.upper()}")
+
+
+def apagar_item(item):
+    lista_compras.pop(item)
+    print(f"\tO item {item} foi apagado da lista!")
 
 
 while True:
@@ -26,6 +30,7 @@ while True:
         continue
 
     if opcao == 'i':
+        os.system('clear')
         while True:
             item = input("\tDigite o item a ser adicionado: ")
             if item.isalpha() or ' ' in item:
@@ -35,14 +40,24 @@ while True:
                 print("\tDigite apenas letras.")
             continue
     elif opcao == 'a':
-        try:
-            item = int(input("Digite o índice do item a ser apagado: "))
-            apagar_item(item)
-        except ValueError:
-            print("\tDigite apenas números")
-            continue
-        except IndexError:
-            print("\tÍndice inexistente")
-            continue
+        if lista_compras == []:
+            print("\tA lista está vazia!")
+        else:
+            print("---------LISTA ATUAL---------\n")
+            for indice, item in enumerate(lista_compras):
+                print(f"\t{indice}: {item.upper()}")
+            try:
+                item = int(input("Digite o índice do item a ser apagado: "))
+                apagar_item(item)
+                print("---------LISTA ATUAL---------\n")
+                for indice, item in enumerate(lista_compras):
+                    print(f"\t{indice}: {item.upper()}")
+            except ValueError:
+                print("\tDigite apenas números")
+                continue
+            except IndexError:
+                print("\tÍndice inexistente")
+                continue
     elif opcao == 'l':
+        os.system('clear')
         listar_itens()
